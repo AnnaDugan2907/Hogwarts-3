@@ -56,15 +56,20 @@ public class StudentController {
 
     @PutMapping //PUT
     public ResponseEntity<Student> editStudent(@RequestBody Student student) {
-        Student foundStudent = studentService.editStudent(student);
-        if (foundStudent == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        Student existingStudent = studentService.findStudent(student.getId());
+        if (existingStudent == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // возвращаем 404, если студента нет
         }
-        return ResponseEntity.ok(foundStudent);
+        Student updatedStudent = studentService.editStudent(student);
+        return ResponseEntity.ok(updatedStudent);
     }
 
     @DeleteMapping("{id}") //DELETE
     public ResponseEntity deleteStudent(@PathVariable Long id) {
+        Student student = studentService.findStudent(id);
+        if (student == null) {
+            return ResponseEntity.notFound().build();
+        }
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
