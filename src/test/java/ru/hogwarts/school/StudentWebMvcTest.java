@@ -64,7 +64,7 @@ public class StudentWebMvcTest {
         when(studentRepository.findById(any(Long.class))).thenReturn(Optional.of(student));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("/Student")
+                        .post("/students")
                         .content(studentObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -74,7 +74,7 @@ public class StudentWebMvcTest {
                 .andExpect(jsonPath("$.age").value(age));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/Student/" + id)
+                        .get("/students/" + id)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))

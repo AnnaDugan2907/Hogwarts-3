@@ -34,7 +34,7 @@ public class StudentControllerTest {
 
     @BeforeEach
     public void setUp() {
-        baseUrl = "http://localhost:" + port + "/Student";
+        baseUrl = "http://localhost:" + port + "/students";
     }
 
     @Test

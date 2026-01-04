@@ -3,6 +3,7 @@ package ru.hogwarts.school;
 import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -36,9 +37,11 @@ public class FacultyWebMvcTest {
     @MockBean
     private FacultyRepository facultyRepository;
 
+    //@SpyBean
     @SpyBean
     private StudentService studentService;
 
+    //@Spy
     @SpyBean
     private FacultyService facultyService;
 
@@ -65,7 +68,7 @@ public class FacultyWebMvcTest {
         when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("/Faculty")
+                        .post("/faculties")
                         .content(facultyObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -75,7 +78,7 @@ public class FacultyWebMvcTest {
                 .andExpect(jsonPath("$.color").value(color));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/Faculty/" + id)
+                        .get("/faculties/" + id)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))

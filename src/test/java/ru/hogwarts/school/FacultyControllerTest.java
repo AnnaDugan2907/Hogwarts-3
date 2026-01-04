@@ -16,9 +16,7 @@ import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.Collection;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -35,7 +33,7 @@ public class FacultyControllerTest {
     private FacultyRepository facultyRepository;
 
     private String getBaseUrl() {
-        return "http://localhost:" + port + "/Faculty";
+        return "http://localhost:" + port + "/faculties";
     }
 
     @Test
@@ -48,7 +46,7 @@ public class FacultyControllerTest {
 
         ResponseEntity<Faculty> response = restTemplate.getForEntity(getBaseUrl() + "/" + createdFaculty.getId(), Faculty.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(createdFaculty.getName(), response.getBody().getName());
+        assertEquals("Test Faculty", response.getBody().getName());
     }
 
     @Test
@@ -125,6 +123,7 @@ public class FacultyControllerTest {
 
     @Test
     public void testGetFacultyStudentsSuccess() {
+
         Faculty faculty = new Faculty();
         faculty.setName("Faculty with Students");
         faculty.setColor("Green");
@@ -137,7 +136,7 @@ public class FacultyControllerTest {
 
     @Test
     public void testGetFaculty() throws Exception {
-        Assertions.assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/Faculty", String.class))
+        Assertions.assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/faculties", String.class))
                 .isNotEmpty();
     }
 
@@ -151,7 +150,7 @@ public class FacultyControllerTest {
         Faculty faculty = new Faculty();
         faculty.setName("Bloody");
         faculty.setColor("red");
-        Assertions.assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/Faculty", faculty, String.class))
+        Assertions.assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/faculties", faculty, String.class))
                 .isNotEmpty();
     }
 }
