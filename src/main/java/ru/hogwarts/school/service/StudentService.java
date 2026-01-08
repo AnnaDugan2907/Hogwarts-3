@@ -1,10 +1,12 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class StudentService {
@@ -53,4 +55,9 @@ public class StudentService {
     public Collection<Student> findByAgeBetween(int minAge, int maxAge) {
         return studentRepository.findByAgeBetween(minAge, maxAge);
     }
+
+    public List<Student> getLastFiveStudents() {
+        return studentRepository.findLastFiveStudents(PageRequest.of(0, 5));
+    }
+
 }
