@@ -1,7 +1,6 @@
 package ru.hogwarts.school.model;
 
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 
 @Entity
 public class Avatar {
@@ -45,7 +44,7 @@ public class Avatar {
     }
 
     public void setMediaType(String mediaType) {
-        MediaType = mediaType;
+        this.MediaType = mediaType;
     }
 
     public byte[] getData() {
