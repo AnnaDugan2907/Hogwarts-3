@@ -9,12 +9,15 @@ import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/faculties")
 public class FacultyController {
 
     private final FacultyService facultService;
+    private FacultyRepository facultyRepository;
 
     public FacultyController(FacultyService facultService) {
         this.facultService = facultService;
@@ -59,6 +62,21 @@ public class FacultyController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(faculty.getStudents());
+    }
+
+    @GetMapping("/longest-name")
+    public String nameSize() {
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparingInt(String::length))
+                .orElse("Факультетов нет");
+    }
+
+    @GetMapping("/step-foure")
+    public int getParallelSum() {
+        return IntStream.rangeClosed(1, 1_000_000)
+                .parallel()
+                .sum();
     }
 
     @PutMapping
