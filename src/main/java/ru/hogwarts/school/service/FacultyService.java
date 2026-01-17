@@ -3,11 +3,14 @@ package ru.hogwarts.school.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 @Service
 public class FacultyService {
@@ -52,5 +55,19 @@ public class FacultyService {
     public Collection<Faculty> findByColorIgnoreCase(String color) {
         logger.info("Was invoked method for find by color ignore case");
         return facultyRepository.findByColorIgnoreCase(color);
+    }
+
+    public String getLongestFacultyName() {
+        Collection<Faculty> faculties = facultyRepository.findAll();
+        return faculties.stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparingInt(String::length))
+                .orElse("Факультетов нет");
+    }
+
+    public int getParallelSum() {
+        return IntStream.rangeClosed(1, 1_000_000)
+                .parallel()
+                .sum();
     }
 }
