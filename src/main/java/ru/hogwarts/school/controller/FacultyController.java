@@ -9,8 +9,6 @@ import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
-import java.util.Comparator;
-import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/faculties")

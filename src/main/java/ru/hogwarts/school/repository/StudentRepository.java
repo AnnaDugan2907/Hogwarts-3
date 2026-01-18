@@ -19,6 +19,7 @@ public interface  StudentRepository extends JpaRepository<Student, Long> {
 
     Collection<Student> findByAgeBetween(int minAge, int maxAge);
 
+    Student findStudentById(long id);
 
     // Получить количество всех студентов в школе.  Эндпоинт должен вернуть число.
     @Query("SELECT COUNT(s) FROM Student s" )
