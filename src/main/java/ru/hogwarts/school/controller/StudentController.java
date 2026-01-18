@@ -69,23 +69,6 @@ public class StudentController {
         return studentService.getAverageAgeAllStudents();
     }
 
-//    @GetMapping("/names-starting-with-a")
-//    public List<String> nameWithA() {
-//        return studentRepository.findAll().stream()
-//                .map(Student::getName)
-//                .filter(name -> name.toUpperCase().startsWith("А"))
-//                .map(String::toUpperCase)
-//                .sorted()
-//                .collect(Collectors.toList());
-//    }
-//
-//    @GetMapping("/avg-age-all-students")
-//    public Double averageAgeAllStudents() {
-//        return studentRepository.findAll().stream()
-//                .mapToInt(Student::getAge)
-//                .average()
-//                .orElse(0);
-//    }
     @PostMapping //POST
     public Student createStudent(@RequestBody Student student) {
         return studentService.createStudent(student);

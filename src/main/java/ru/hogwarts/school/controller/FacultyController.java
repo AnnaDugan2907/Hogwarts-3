@@ -64,14 +64,6 @@ public class FacultyController {
         return ResponseEntity.ok(faculty.getStudents());
     }
 
-//    @GetMapping("/longest-name")
-//    public String nameSize() {
-//        return facultyRepository.findAll().stream()
-//                .map(Faculty::getName)
-//                .max(Comparator.comparingInt(String::length))
-//                .orElse("Факультетов нет");
-//    }
-
     @GetMapping("/longest-name")
     public String getLongestName() {
         return facultService.getLongestFacultyName();
@@ -81,13 +73,6 @@ public class FacultyController {
     public int getParallelSum() {
         return facultService.getParallelSum();
     }
-
-//    @GetMapping("/step-foure")
-//    public int getParallelSum() {
-//        return IntStream.rangeClosed(1, 1_000_000)
-//                .parallel()
-//                .sum();
-//    }
 
     @PutMapping
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
