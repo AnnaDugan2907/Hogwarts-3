@@ -4,11 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -96,5 +98,21 @@ public class StudentService {
         logger.info("Was invoked method for find by name");
 
         return studentRepository.findLastFiveStudents(PageRequest.of(0, 5));
+    }
+
+    public List<String> getNamesStartingWithA() {
+        return studentRepository.findAll().stream()
+                .map(Student::getName)
+                .filter(name -> name.toUpperCase().startsWith("А"))
+                .map(String::toUpperCase)
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    public Double getAverageAgeAllStudents() {
+        return studentRepository.findAll().stream()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElse(0.0);
     }
 }
