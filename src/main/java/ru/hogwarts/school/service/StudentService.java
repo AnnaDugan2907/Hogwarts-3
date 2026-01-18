@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
@@ -114,5 +113,37 @@ public class StudentService {
                 .mapToInt(Student::getAge)
                 .average()
                 .orElse(0.0);
+    }
+
+    public void printParallel() {
+        System.out.println(studentRepository.findStudentById(1L));
+        System.out.println(studentRepository.findStudentById(2L));
+        new Thread(() -> {
+            System.out.println(studentRepository.findStudentById(3L));
+            System.out.println(studentRepository.findStudentById(4L));
+        }).start();
+        new Thread(() -> {
+            System.out.println(studentRepository.findStudentById(5L));
+            System.out.println(studentRepository.findStudentById(67L));
+        }).start();
+    }
+
+    public synchronized void printSynchronized() {
+        System.out.println(studentRepository.findStudentById(1L));
+        System.out.println(studentRepository.findStudentById(2L));
+        new Thread(() -> {
+            printSync(3L);
+            printSync(4L);
+        }).start();
+        new Thread(() -> {
+            printSync(5L);
+            printSync(6L);
+        }).start();
+    }
+
+    public void printSync(Long studentId) {
+        synchronized (StudentService.class) {
+            System.out.println(studentRepository.findStudentById(studentId));
+        }
     }
 }
