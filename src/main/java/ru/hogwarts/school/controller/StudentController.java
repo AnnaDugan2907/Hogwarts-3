@@ -9,7 +9,6 @@ import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/students")
@@ -67,6 +66,15 @@ public class StudentController {
     @GetMapping("/avg-age-all-students")
     public Double averageAgeAllStudents() {
         return studentService.getAverageAgeAllStudents();
+    }
+
+    @GetMapping("/print-parallel")
+    public void printParallel(){
+        studentService.printParallel();
+    }
+    @GetMapping("/print-synchronized")
+    public void printSynchronized(){
+        studentService.printSynchronized();
     }
 
     @PostMapping //POST
